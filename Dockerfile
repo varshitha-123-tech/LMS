@@ -13,3 +13,5 @@ EXPOSE 80
 
 # Start the Apache server
 CMD ["apache2-foreground"]
+
+RUN docker-php-ext-install mysqli
