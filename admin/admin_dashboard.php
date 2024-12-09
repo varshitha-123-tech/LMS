@@ -1,6 +1,5 @@
 <?php
     require("functions.php");
-    require("config.php"); // Include the centralized database configuration file
     session_start();
 ?>
 <!DOCTYPE html>
