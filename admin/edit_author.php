@@ -1,21 +1,24 @@
-<?php
+<<?php 
 	session_start();
-	#fetch data from database
-	$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-	$db = mysqli_select_db($connection,"id21170968_lms");
-	$author_id = "";
-	$author_name = "";
-	$query = "select * from authors where author_id = $_GET[aid]";
-	$query_run = mysqli_query($connection,$query);
-	while ($row = mysqli_fetch_assoc($query_run)){
-		$author_name = $row['author_name'];
-		$author_id = $row['author_id'];
-	}
+    require("config.php"); // Include the centralized database configuration file
+
+    # Fetch data from the database
+    $author_id = "";
+    $author_name = "";
+    if (isset($_GET['aid'])) {
+        $author_id = $_GET['aid']; // Get author ID from URL
+        $query = "SELECT * FROM authors WHERE author_id = $author_id";
+        $query_run = mysqli_query($conn, $query); // Use $conn from config.php
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $author_name = $row['author_name'];
+            $author_id = $row['author_id'];
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dashboard</title>
+	<title>Edit Author</title>
 	<meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
 	<link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap.min.css">
   	<script type="text/javascript" src="../bootstrap-4.4.1/js/juqery_latest.js"></script>
@@ -27,8 +30,8 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="admin_dashboard.php">Library Management System (LMS)</a>
 			</div>
-			<font style="color: white"><span><strong>Welcome: <?php echo $_SESSION['name'];?></strong></span></font>
-			<font style="color: white"><span><strong>Email: <?php echo $_SESSION['email'];?></strong></font>
+			<font style="color: white"><span><strong>Welcome: <?php echo $_SESSION['name']; ?></strong></span></font>
+			<font style="color: white"><span><strong>Email: <?php echo $_SESSION['email']; ?></strong></font>
 		    <ul class="nav navbar-nav navbar-right">
 		      <li class="nav-item dropdown">
 	        	<a class="nav-link dropdown-toggle" data-toggle="dropdown">My Profile </a>
@@ -46,8 +49,8 @@
 		    </ul>
 		</div>
 	</nav><br>
-	<span><marquee>This is library mangement system. Library opens at 8:00 AM and close at 8:00 PM</marquee></span><br><br>
-		<center><h4>Edit Book</h4><br></center>
+	<span><marquee>This is library management system. Library opens at 8:00 AM and closes at 8:00 PM</marquee></span><br><br>
+		<center><h4>Edit Author</h4><br></center>
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
@@ -64,11 +67,13 @@
 </body>
 </html>
 <?php
-	if(isset($_POST['update_author'])){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$query = "update authors set author_name = '$_POST[author_name]' where author_id = $_GET[aid]";
-		$query_run = mysqli_query($connection,$query);
-		header("location:manage_author.php");
+	if (isset($_POST['update_author'])) {
+        if (isset($_GET['aid'])) {
+            $author_id = $_GET['aid']; // Get author ID from URL
+            $author_name = $_POST['author_name'];
+            $query = "UPDATE authors SET author_name = '$author_name' WHERE author_id = $author_id";
+            $query_run = mysqli_query($conn, $query); // Use $conn from config.php
+            header("location:manage_author.php");
+        }
 	}
 ?>

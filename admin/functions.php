@@ -1,61 +1,60 @@
-<?php
-	function get_author_count(){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$author_count = 0;
-		$query = "select count(*) as author_count from authors";
-		$query_run = mysqli_query($connection,$query);
-		while ($row = mysqli_fetch_assoc($query_run)){
-			$author_count = $row['author_count'];
-		}
-		return($author_count);
-	}
+<<?php
+    require("config.php"); // Include the centralized database configuration file
 
-	function get_user_count(){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$user_count = 0;
-		$query = "select count(*) as user_count from users";
-		$query_run = mysqli_query($connection,$query);
-		while ($row = mysqli_fetch_assoc($query_run)){
-			$user_count = $row['user_count'];
-		}
-		return($user_count);
-	}
+    function get_author_count() {
+        global $conn; // Use the centralized database connection
+        $author_count = 0;
+        $query = "SELECT COUNT(*) AS author_count FROM authors";
+        $query_run = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $author_count = $row['author_count'];
+        }
+        return $author_count;
+    }
 
-	function get_book_count(){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$book_count = 0;
-		$query = "select count(*) as book_count from books";
-		$query_run = mysqli_query($connection,$query);
-		while ($row = mysqli_fetch_assoc($query_run)){
-			$book_count = $row['book_count'];
-		}
-		return($book_count);
-	}
+    function get_user_count() {
+        global $conn; // Use the centralized database connection
+        $user_count = 0;
+        $query = "SELECT COUNT(*) AS user_count FROM users";
+        $query_run = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $user_count = $row['user_count'];
+        }
+        return $user_count;
+    }
 
-	function get_issue_book_count(){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$issue_book_count = 0;
-		$query = "select count(*) as issue_book_count from issued_books";
-		$query_run = mysqli_query($connection,$query);
-		while ($row = mysqli_fetch_assoc($query_run)){
-			$issue_book_count = $row['issue_book_count'];
-		}
-		return($issue_book_count);
-	}
+    function get_book_count() {
+        global $conn; // Use the centralized database connection
+        $book_count = 0;
+        $query = "SELECT COUNT(*) AS book_count FROM books";
+        $query_run = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $book_count = $row['book_count'];
+        }
+        return $book_count;
+    }
 
-	function get_category_count(){
-		$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-		$db = mysqli_select_db($connection,"id21170968_lms");
-		$cat_count = 0;
-		$query = "select count(*) as cat_count from category";
-		$query_run = mysqli_query($connection,$query);
-		while ($row = mysqli_fetch_assoc($query_run)){
-			$cat_count = $row['cat_count'];
-		}
-		return($cat_count);
-	}
+    function get_issue_book_count() {
+        global $conn; // Use the centralized database connection
+        $issue_book_count = 0;
+        $query = "SELECT COUNT(*) AS issue_book_count FROM issued_books";
+        $query_run = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $issue_book_count = $row['issue_book_count'];
+        }
+        return $issue_book_count;
+    }
+
+    function get_category_count() {
+        global $conn; // Use the centralized database connection
+        $cat_count = 0;
+        $query = "SELECT COUNT(*) AS cat_count FROM category";
+        $query_run = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) {
+            $cat_count = $row['cat_count'];
+        }
+        return $cat_count;
+    }
+?>
+
 ?>

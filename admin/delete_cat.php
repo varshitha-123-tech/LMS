@@ -1,10 +1,14 @@
 <?php
-	$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-	$db = mysqli_select_db($connection,"id21170968_lms");
-	$query = "delete from category where cat_id = $_GET[cid]";
-	$query_run = mysqli_query($connection,$query);
+    require("config.php"); // Include the centralized database configuration file
+
+    // Execute delete query
+    if (isset($_GET['cid'])) {
+        $cat_id = $_GET['cid']; // Get the category ID from the URL parameter
+        $query = "DELETE FROM category WHERE cat_id = $cat_id";
+        $query_run = mysqli_query($conn, $query); // Use $conn from config.php
+    }
 ?>
 <script type="text/javascript">
-	alert("Category Deleted successfully...");
-	window.location.href = "manage_cat.php";
+    alert("Category Deleted successfully...");
+    window.location.href = "manage_cat.php";
 </script>

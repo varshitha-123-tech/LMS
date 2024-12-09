@@ -1,10 +1,14 @@
 <?php
-	$connection = mysqli_connect("localhost","id21170968_dev","Ucmo@123$");
-	$db = mysqli_select_db($connection,"id21170968_lms");
-	$query = "delete from authors where author_id = $_GET[aid]";
-	$query_run = mysqli_query($connection,$query);
+    require("config.php"); // Include the centralized database configuration file
+
+    // Execute delete query
+    if (isset($_GET['aid'])) {
+        $author_id = $_GET['aid']; // Get author ID from the URL parameter
+        $query = "DELETE FROM authors WHERE author_id = $author_id";
+        $query_run = mysqli_query($conn, $query); // Use $conn from config.php
+    }
 ?>
 <script type="text/javascript">
-	alert("Author Deleted successfully...");
-	window.location.href = "manage_author.php";
+    alert("Author Deleted successfully...");
+    window.location.href = "manage_author.php";
 </script>
