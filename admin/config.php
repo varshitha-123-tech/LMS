@@ -1,27 +1,19 @@
 <?php
-// Database connection details from Clever Cloud environment variables
-$host = 'b66teogvuw1zyrmkrumh-mysql.services.clever-cloud.com';
+// Database connection using provided credentials
+$host = 'bqadpx2zv3iix7vczpo8-mysql.services.clever-cloud.com';
+$database = 'bqadpx2zv3iix7vczpo8';
+$username = 'uppbsxliffzcjdrk';
+$password = 'qCkygqkskoYYpCZiitga';
 $port = 3306;
-$database = 'b66teogvuw1zyrmkrumh';
-$username = 'uuw0sr7tr8qpe4ho';
-$password = 'vzPXhJMiI6rftjWprU9l';
 
-try {
-    // Create a PDO connection
-    $connection = new PDO(
-        "mysql:host=$host;port=$port;dbname=$database;charset=utf8mb4",
-        $username,
-        $password,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Enable exceptions for errors
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // Fetch results as associative arrays
-        ]
-    );
+// Create connection
+$conn = new mysqli($host, $username, $password, $database, $port);
 
-    // Debug: Uncomment the following line to confirm connection
-    // echo "Connected to the MySQL database successfully!";
-} catch (PDOException $e) {
-    // Handle connection errors
-    die("Database connection failed: " . $e->getMessage());
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Optional: Uncomment to verify connection details (for debugging only, not for production)
+// echo "Connected successfully to the database!";
 ?>
