@@ -1,19 +1,24 @@
 <?php
-// Database connection using provided credentials
-$host = 'bqadpx2zv3iix7vczpo8-mysql.services.clever-cloud.com';
-$database = 'bqadpx2zv3iix7vczpo8';
-$username = 'uppbsxliffzcjdrk';
-$password = 'qCkygqkskoYYpCZiitga';
-$port = 3306;
+// Database credentials
+$host = 'dpg-ctbt6pdumphs73asmdb0-a.oregon-postgres.render.com';
+$port = 5432;
+$database = 'lms_ujg4';
+$username = 'lms_ujg4_user';
+$password = 'Bk4RQ1LkiyX3F8pdf0oJ2CCHGpDjvnxP';
 
-// Create connection
-$conn = new mysqli($host, $username, $password, $database, $port);
+try {
+    // Create a PostgreSQL database connection
+    $dsn = "pgsql:host=$host;port=$port;dbname=$database";
+    $connection = new PDO($dsn, $username, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Enable exceptions for errors
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // Fetch results as associative arrays
+    ]);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Connection successful message (for debugging)
+    // echo "Database connection successful!";
+} catch (PDOException $e) {
+    // Handle connection errors
+    die("Database connection failed: " . $e->getMessage());
 }
-
-// Optional: Uncomment to verify connection details (for debugging only, not for production)
-// echo "Connected successfully to the database!";
 ?>
+
