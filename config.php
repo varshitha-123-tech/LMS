@@ -1,9 +1,9 @@
 <?php
 // Database connection using provided credentials
-$host = 'bqadpx2zv3iix7vczpo8-mysql.services.clever-cloud.com';
-$database = 'bqadpx2zv3iix7vczpo8';
-$username = 'uppbsxliffzcjdrk';
-$password = 'qCkygqkskoYYpCZiitga';
+$host ='bqadpx2zv3iix7vczpo8-mysql.services.clever-cloud.com';
+$database ='bqadpx2zv3iix7vczpo8';
+$username ='uppbsxliffzcjdrk';
+$password ='qCkygqkskoYYpCZiitga';
 $port = 3306;
 
 // Create connection
