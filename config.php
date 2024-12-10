@@ -1,4 +1,4 @@
-<<?php
+<?php
 // Database connection details from Clever Cloud environment variables
 $host = 'b66teogvuw1zyrmkrumh-mysql.services.clever-cloud.com';
 $port = 3306;
