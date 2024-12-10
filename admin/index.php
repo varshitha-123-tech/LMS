@@ -1,39 +1,56 @@
 <?php
-    session_start();
-    require("config.php"); // Include the centralized database configuration file
-?>
-<?php
-    $error = false;
-    if (isset($_POST['login'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+session_start();
+require("config.php"); // Include the centralized database configuration file
 
-        # Query to fetch the admin record
-        $query = "SELECT * FROM admins WHERE email = '$email'";
-        $query_run = mysqli_query($conn, $query); // Use $conn from config.php
+$error = false;
 
-        while ($row = mysqli_fetch_assoc($query_run)) {
-            if ($row['email'] == $email) {
-                if ($row['password'] == $password) {
-                    # Start session and redirect to admin dashboard
-                    $_SESSION['name'] = $row['name'];
-                    $_SESSION['email'] = $row['email'];
-                    header("Location: admin_dashboard.php");
-                } else {
-                    $error = true; // Wrong password
-                }
-            }
-        }
+if (isset($_POST['login'])) {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    // Check if the database connection is established
+    if (!$conn) {
+        die("Database connection failed: " . mysqli_connect_error());
     }
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ?");
+    if (!$stmt) {
+        die("Statement preparation failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Verify the password
+        if (password_verify($password, $row['password'])) {
+            // Store user details in the session and redirect
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['email'] = $row['email'];
+            header("Location: admin_dashboard.php");
+            exit();
+        } else {
+            $error = true; // Invalid password
+        }
+    } else {
+        $error = true; // No admin found with that email
+    }
+
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>LMS | Login</title>
-    <meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap.min.css">
-    <script type="text/javascript" src="./bootstrap-4.4.1/js/juqery_latest.js"></script>
-    <script type="text/javascript" src="./bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.4.1/js/jquery_latest.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.4.1/js/bootstrap.min.js"></script>
 </head>
 <style type="text/css">
     #main_content {
@@ -100,10 +117,12 @@
             </form>
             <?php 
                 if ($error) {
-                    echo '<br><br><center><span class="alert-danger">Wrong Password !!</span></center>';
+                    echo '<br><br><center><span class="alert-danger">Invalid Email or Password!</span></center>';
                 }
             ?>
         </div>
     </div>
 </body>
 </html>
+
+
