@@ -3,6 +3,8 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+use database bqadpx2zv3iix7vczpo8;
+
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS `admins`;
 DROP TABLE IF EXISTS `authors`;

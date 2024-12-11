@@ -1,5 +1,6 @@
 <?php
     require("functions.php");
+    require("config.php");
     session_start();
 ?>
 <!DOCTYPE html>
